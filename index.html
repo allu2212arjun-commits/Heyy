@@ -5,6 +5,7 @@
 <title>For You ❤️</title>
 
 <style>
+/* Body & Background */
 body {
   height: 100vh;
   margin: 0;
@@ -18,30 +19,40 @@ body {
   position: relative;
 }
 
+/* Box for questions */
 .box {
   text-align: center;
-  background: rgba(255, 230, 235, 0.85);
-  padding: 30px;
+  background: rgba(255, 230, 235, 0.9);
+  padding: 20px 15px;
   border-radius: 15px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  width: 90%;
+  max-width: 400px;
   z-index: 10;
 }
 
 h1 {
   color: #e6005c;
+  font-size: 1.5rem;
+  line-height: 1.3;
+  margin-bottom: 15px;
 }
 
+/* Options/buttons */
 .options {
-  margin-top: 20px;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 button {
-  padding: 10px 20px;
-  font-size: 18px;
-  margin: 10px;
+  padding: 12px 0;
+  font-size: 1.2rem;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
+  width: 100%;
 }
 
 .good {
@@ -53,20 +64,21 @@ button {
   background-color: #999;
   color: white;
   position: fixed;
+  z-index: 15;
 }
 
 #end {
   display: none;
-  margin-top: 25px;
-  font-size: 20px;
+  margin-top: 20px;
+  font-size: 1.1rem;
   color: #e6005c;
 }
 
-/* Floating hearts/kitties */
+/* Floating kitties/hearts */
 .floating {
   position: absolute;
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   pointer-events: none;
   z-index: 5;
   animation: floatUp linear infinite;
@@ -76,6 +88,19 @@ button {
   0% { transform: translateY(100vh) scale(0.5) rotate(0deg); opacity: 0; }
   10% { opacity: 1; }
   100% { transform: translateY(-50px) scale(1) rotate(360deg); opacity: 0; }
+}
+
+/* Responsive text scaling for smaller phones */
+@media screen and (max-width: 350px) {
+  h1 {
+    font-size: 1.3rem;
+  }
+  button {
+    font-size: 1rem;
+  }
+  .box {
+    padding: 15px 10px;
+  }
 }
 </style>
 </head>
@@ -98,6 +123,7 @@ button {
 </div>
 
 <script>
+// Questions flow
 const questions = [
   { text: "Heyy Khayati 💕", good: "Heyy Divyanshu 🥰", bad: null },
   { text: "How’s life going? 🙂", good: "Great ✨", bad: "Okayish" },
@@ -106,21 +132,20 @@ const questions = [
 ];
 
 let index = 0;
-
 const questionText = document.getElementById("question");
 const goodBtn = document.getElementById("good");
 const badBtn = document.getElementById("bad");
 const endDiv = document.getElementById("end");
 
-// Bad button escape
+// Bad button moves away
 badBtn.addEventListener("mouseover", () => {
-  const x = Math.random() * (window.innerWidth - 120);
-  const y = Math.random() * (window.innerHeight - 60);
+  const x = Math.random() * (window.innerWidth - 60);
+  const y = Math.random() * (window.innerHeight - 50);
   badBtn.style.left = x + "px";
   badBtn.style.top = y + "px";
 });
 
-// Question flow
+// Good button click
 goodBtn.addEventListener("click", () => {
   index++;
   if (index < questions.length) {
@@ -139,7 +164,7 @@ goodBtn.addEventListener("click", () => {
   }
 });
 
-// Floating kitties/hearts generator
+// Floating hearts/kitties
 const images = [
   'https://cdn-icons-png.flaticon.com/512/616/616408.png', // kitty
   'https://cdn-icons-png.flaticon.com/512/833/833472.png'  // heart
@@ -149,11 +174,10 @@ function createFloating() {
   const img = document.createElement('img');
   img.src = images[Math.floor(Math.random() * images.length)];
   img.className = 'floating';
-  img.style.left = Math.random() * (window.innerWidth - 50) + 'px';
+  img.style.left = Math.random() * (window.innerWidth - 40) + 'px';
   img.style.animationDuration = 5 + Math.random() * 5 + 's';
   document.body.appendChild(img);
-
-  setTimeout(() => { img.remove(); }, 10000);
+  setTimeout(() => img.remove(), 10000);
 }
 
 setInterval(createFloating, 800);
@@ -161,4 +185,6 @@ setInterval(createFloating, 800);
 
 </body>
 </html>
+
+
 
