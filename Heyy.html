@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You ❤️</title>
+
+<style>
+body {
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url('https://i.pinimg.com/originals/44/82/2b/44822b15c19c0c15452e0a0c34b9de06.png') no-repeat center center fixed;
+  background-size: cover;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+
+.box {
+  text-align: center;
+  background: rgba(255, 230, 235, 0.85);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  z-index: 10;
+}
+
+h1 {
+  color: #e6005c;
+}
+
+.options {
+  margin-top: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 18px;
+  margin: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.good {
+  background-color: #ff4d79;
+  color: white;
+}
+
+.bad {
+  background-color: #999;
+  color: white;
+  position: fixed;
+}
+
+#end {
+  display: none;
+  margin-top: 25px;
+  font-size: 20px;
+  color: #e6005c;
+}
+
+/* Floating hearts/kitties */
+.floating {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+  z-index: 5;
+  animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(100vh) scale(0.5) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateY(-50px) scale(1) rotate(360deg); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+  <h1 id="question">Heyy Khayati 💕</h1>
+
+  <div class="options" id="options">
+    <button class="good" id="good">Heyy Divyanshu 🥰</button>
+    <button class="bad" id="bad" style="display:none;">Bad</button>
+  </div>
+
+  <div id="end">
+    <p>Me too 🫶🏻</p>
+    <p>I just wanted you to know that I like talking to you.<br>
+    It genuinely makes my day a little better ☺️</p>
+  </div>
+</div>
+
+<script>
+const questions = [
+  { text: "Heyy Khayati 💕", good: "Heyy Divyanshu 🥰", bad: null },
+  { text: "How’s life going? 🙂", good: "Great ✨", bad: "Okayish" },
+  { text: "Do you like my company? 😅", good: "Yess 🫶", bad: "No" },
+  { text: "Are you quite excited for our first meet? 🤭", good: "Yess 😍", bad: "No" }
+];
+
+let index = 0;
+
+const questionText = document.getElementById("question");
+const goodBtn = document.getElementById("good");
+const badBtn = document.getElementById("bad");
+const endDiv = document.getElementById("end");
+
+// Bad button escape
+badBtn.addEventListener("mouseover", () => {
+  const x = Math.random() * (window.innerWidth - 120);
+  const y = Math.random() * (window.innerHeight - 60);
+  badBtn.style.left = x + "px";
+  badBtn.style.top = y + "px";
+});
+
+// Question flow
+goodBtn.addEventListener("click", () => {
+  index++;
+  if (index < questions.length) {
+    questionText.innerText = questions[index].text;
+    goodBtn.innerText = questions[index].good;
+    if (questions[index].bad) {
+      badBtn.innerText = questions[index].bad;
+      badBtn.style.display = "inline-block";
+    } else {
+      badBtn.style.display = "none";
+    }
+  } else {
+    document.getElementById("options").style.display = "none";
+    questionText.style.display = "none";
+    endDiv.style.display = "block";
+  }
+});
+
+// Floating kitties/hearts generator
+const images = [
+  'https://cdn-icons-png.flaticon.com/512/616/616408.png', // kitty
+  'https://cdn-icons-png.flaticon.com/512/833/833472.png'  // heart
+];
+
+function createFloating() {
+  const img = document.createElement('img');
+  img.src = images[Math.floor(Math.random() * images.length)];
+  img.className = 'floating';
+  img.style.left = Math.random() * (window.innerWidth - 50) + 'px';
+  img.style.animationDuration = 5 + Math.random() * 5 + 's';
+  document.body.appendChild(img);
+
+  setTimeout(() => { img.remove(); }, 10000);
+}
+
+setInterval(createFloating, 800);
+</script>
+
+</body>
+</html>
+
